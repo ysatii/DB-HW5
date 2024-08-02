@@ -178,3 +178,5 @@ join rental r on p2.payment_date = r.rental_date
 join customer c on r.customer_id = c.customer_id
 ```
 ![рис 2_7](https://github.com/ysatii/DB-HW5/blob/main/img/image2_7.jpg)
+
+Вероятно на малых объемах не возможно определеить кто из них выполняеться быстрее
