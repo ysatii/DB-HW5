@@ -110,3 +110,21 @@ where  date(p.payment_date) >= '2005-07-30' and date(p.payment_date) < DATE_ADD(
 ```
 
 ![рис 2_1](https://github.com/ysatii/DB-HW5/blob/main/img/image2_1.jpg)
+
+сравним оба рисунка, видим явное уменьшение времени выполнения  
+например 
+
+было Table scan on <temporary>  (cost=2.5..2.5 rows=0) (actual time=9936..9936 rows=391 loops=1)  
+стало Table scan on <temporary>  (cost=2.5..2.5 rows=0) (actual time=27.5..27.5 rows=391 loops=1)  
+
+было Temporary table with deduplication  (cost=0..0 rows=0) (actual time=9936..9936 rows=391 loops=1)  
+стало Temporary table with deduplication  (cost=0..0 rows=0) (actual time=27.5..27.5 rows=391 loops=1)  
+
+Выполним оба запроса, исначальный и исправленный
+![рис 2_2](https://github.com/ysatii/DB-HW5/blob/main/img/image2_2.jpg)
+![рис 2_3](https://github.com/ysatii/DB-HW5/blob/main/img/image2_3.jpg)
+
+Выполним оба запроса, исначальный и исправленный
+предложенный в задании запрос в среднем выполняеться не менее 8 секунд
+исправленный 0,035 с. скорость обработки запроса увеличилась в боле чем 200 раз
+
