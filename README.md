@@ -128,3 +128,27 @@ where  date(p.payment_date) >= '2005-07-30' and date(p.payment_date) < DATE_ADD(
 предложенный в задании запрос в среднем выполняеться не менее 8 секунд
 исправленный 0,035 с. скорость обработки запроса увеличилась в боле чем 200 раз
 
+попробуем увеличить скорость за счет индексов 
+```
+CREATE INDEX customer_rental_id_amount_payment_date ON payment(customer_id, rental_id, amount, payment_date);
+
+CREATE INDEX idx_amount ON payment(amount);
+
+CREATE INDEX customer_id_amount ON payment(customer_id, amount);
+```
+![рис 2_4](https://github.com/ysatii/DB-HW5/blob/main/img/image2_4.jpg)
+
+Выполним 
+```
+explain analyze
+select distinct concat(c.last_name, ' ', c.first_name),   sum(p.amount) over (partition by c.customer_id  )
+from payment p
+join rental r on p.payment_date = r.rental_date
+join customer c on r.customer_id = c.customer_id
+-- join inventory i on i.inventory_id = r.inventory_id
+where  date(p.payment_date) >= '2005-07-30' and date(p.payment_date) < DATE_ADD('2005-07-30', INTERVAL 1 DAY)
+```
+![рис 2_5](https://github.com/ysatii/DB-HW5/blob/main/img/image2_5.jpg)
+
+Среднее время не выполнения запроса сильно не изменилось, но при увеличении объема базы, использование индексов должно помощь
+в быстром выполнении запросов
