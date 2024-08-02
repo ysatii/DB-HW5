@@ -166,3 +166,15 @@ group by c.customer_id;
 среднее врменя выполнения дажет немного больше
 
 ![рис 2_6](https://github.com/ysatii/DB-HW5/blob/main/img/image2_6.jpg)
+
+С использованием подзапросов  
+```
+explain analyze
+select distinct concat(c.last_name, ' ', c.first_name),   sum(p2.amount) over (partition by c.customer_id  )
+from  (select p.payment_id, p.customer_id, p.amount, p.payment_date
+       from  payment p
+        where  date(p.payment_date) >= '2005-07-30' and date(p.payment_date) < DATE_ADD('2005-07-30', INTERVAL 1 DAY)) as p2
+join rental r on p2.payment_date = r.rental_date
+join customer c on r.customer_id = c.customer_id
+```
+![рис 2_7](https://github.com/ysatii/DB-HW5/blob/main/img/image2_7.jpg)
