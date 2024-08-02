@@ -93,7 +93,7 @@ select distinct concat(c.last_name, ' ', c.first_name), t
 from payment p, rental r, customer c, inventory i, film f
 where date(p.payment_date) = '2005-07-30' and p.payment_date = r.rental_date and r.customer_id = c.customer_id and i.inventory_id = r.inventory_id
 ```
-![рис ](https://github.com/ysatii/DB-HW4/blob/main/img/image2.jpg)
+![рис ](https://github.com/ysatii/DB-HW5/blob/main/img/image2.jpg)
 
 используем join, уберем из запроса таблицы  inventory, film, данныые из них для запроса платежей не нужны
 
@@ -109,4 +109,4 @@ join customer c on r.customer_id = c.customer_id
 where  date(p.payment_date) >= '2005-07-30' and date(p.payment_date) < DATE_ADD('2005-07-30', INTERVAL 1 DAY)
 ```
 
-![рис 2_1](https://github.com/ysatii/DB-HW4/blob/main/img/image2_1.jpg)
+![рис 2_1](https://github.com/ysatii/DB-HW5/blob/main/img/image2_1.jpg)
