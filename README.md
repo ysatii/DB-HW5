@@ -152,3 +152,16 @@ where  date(p.payment_date) >= '2005-07-30' and date(p.payment_date) < DATE_ADD(
 
 Среднее время не выполнения запроса сильно не изменилось, но при увеличении объема базы, использование индексов должно помощь
 в быстром выполнении запросов
+
+
+select  concat(c.last_name, ' ', c.first_name), sum(p.amount), c.customer_id
+from payment p
+join rental r on p.payment_date = r.rental_date
+join customer c on r.customer_id = c.customer_id
+join inventory i on i.inventory_id = r.inventory_id
+where  date(p.payment_date) >= '2005-07-30' and date(p.payment_date) < DATE_ADD('2005-07-30', INTERVAL 1 DAY)
+group by c.customer_id;
+
+среднее врменя выполнения дажет немного больше
+
+![рис 2_6](https://github.com/ysatii/DB-HW5/blob/main/img/image2_6.jpg)
